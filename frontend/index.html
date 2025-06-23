@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Code Explainer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>AI Code Explainer</h1>
+  <form id="form">
+    <textarea name="code" placeholder="Paste your code here..." required></textarea>
+    <input name="language" placeholder="Optional: Language (e.g., Python)" />
+    <button type="submit">Explain</button>
+  </form>
+  <h2>Explanation:</h2>
+  <pre id="output"></pre>
+
+  <script>
+    const form = document.getElementById("form");
+    const output = document.getElementById("output");
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const res = await fetch("http://localhost:8000/explain", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      output.textContent = data.explanation;
+    };
+  </script>
+</body>
+</html>
